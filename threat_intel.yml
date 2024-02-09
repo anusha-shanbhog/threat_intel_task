@@ -1,0 +1,187 @@
+behavior:
+  name: Gaining access to the environment through remotely accessible server 
+  applicable mitre_attck ttp: TA[TA0001].[T1190]
+  severity: medium
+  program: none
+  parameters: none
+  detection_sources:
+    - Windows event logs
+    - Analyze Network Traffic
+  detection_rules:
+    
+
+behavior:
+  name: executing commands and running programs using the MSSQL’s stored procedure (xp_cmdshell)
+  applicable mitre_attck ttp: TA[TA0043].[T1592]
+  severity: medium
+  program: running systeminfo, ipconfig, whoami, quser commands using the MSSQL’s stored procedure (xp_cmdshell)
+  parameters: none
+  detection_sources:
+    - Windows event logs
+    - Endpoint process monitoring
+    - Analyze Network Traffic
+  detection_rules:
+    
+behavior:
+  name: executing commands and running programs using the MSSQL’s stored procedure (xp_cmdshell)
+  applicable mitre_attck ttp: TA[TA0043].[T1592]
+  severity: medium
+  program: running systeminfo, ipconfig, whoami, quser commands using the MSSQL’s stored procedure (xp_cmdshell)
+  parameters: none
+  detection_sources:
+    - Windows event logs
+    - Endpoint process monitoring
+    - Analyze Network Traffic
+  detection_rules:
+
+  
+behavior:
+  name: leveraging remote SMB and WMI to create a local administrator account named "helpdesk" on each machine
+  applicable mitre_attck ttp: TA[TA0003].[T1136].[001]
+  severity: high
+  program: create a local administrator account named "helpdesk" on each machine
+  parameters: username, password, group
+  detection_sources:
+    - System Logs
+    - File System Monitoring
+  detection_rules:
+    - https://github.com/mdecrevoisier/SIGMA-detection-rules/blob/007769ff4011fbb7c28d8db7431db3e89b614711/windows-os/win-os-hidden%20account%20creation.yaml#L19
+
+
+behavior:
+  name: set up a randomly named Windows service (qLVAMxSGzP)
+  applicable mitre_attck ttp: TA[TA0003].[T1543].[003]
+  severity: high
+  program: execute a temporary batch file with commands to add a local user and insert this user into the local administrator group. After execution, the file would then be deleted.
+  parameters: user, output path, temporary batch file
+  detection_sources:
+    - System Logs
+    - File System Monitoring
+  detection_rules:
+    - https://github.com/mdecrevoisier/SIGMA-detection-rules/blob/007769ff4011fbb7c28d8db7431db3e89b614711/windows-os/win-os-PSexec%20service%20install.yaml#L19
+
+
+behavior:
+  name: Cobalt strike for further execution
+  applicable mitre_attck ttp: TA[TA0003].[T1543].[003]
+  severity: high
+  program: Cobalt Strike for C2 and further execution using a legitimately signed version of Trend Micro’s Deep Security Monitor (ds_monitor.exe) to load Cobalt Strike by side-loading a malicious DLL (msvcp140.dll)
+  parameters: user, output path, temporary batch file
+  detection_sources:
+    - System Logs
+    - File System Monitoring
+  detection_rules:
+    
+
+behavior:
+  name: gathering credentials
+  applicable mitre_attck ttp: TA[TA0006].[T1003].[002]
+  severity: high
+  program: dumping the Security Account Manager (SAM) registry hive on different servers
+  parameters: none
+  detection_sources:
+    - Endpoint Detection and Response (EDR)
+    - File Integrity Monitoring (FIM)
+  detection_rules:
+    - https://github.com/mdecrevoisier/SIGMA-detection-rules/blob/007769ff4011fbb7c28d8db7431db3e89b614711/windows-active_directory/win-ad-SAM%20database%20access%20during%20DCshadow.yaml#L3
+    - https://github.com/mdecrevoisier/SIGMA-detection-rules/blob/007769ff4011fbb7c28d8db7431db3e89b614711/windows-active_directory/win-ad-SAM%20database%20user%20credentials%20dump%20with%20Mimikatz.yaml#L3
+    - https://github.com/mdecrevoisier/SIGMA-detection-rules/blob/007769ff4011fbb7c28d8db7431db3e89b614711/windows-os/win-os-WMIexec%20via%20SMB%20admin%20share.yaml#L19
+
+
+behavior:
+  name: downloading and executing a command line utility
+  applicable mitre_attck ttp: TA[TA0010].[T1041]
+  severity: medium
+  program: downloaing MEGA Cmd renaming it to ms_edge.exe and execution
+  parameters: urlcache, configuration file, compressed file
+  detection_sources:
+    - Network Traffic Analysis
+    - Endpoint Detection and Response (EDR)
+    - File Integrity Monitoring (FIM)
+  detection_rules:
+
+
+behavior:
+  name: downloading payloads and tooling
+  applicable mitre_attck ttp: TA[TA0002].[T1059].[001]
+  severity: medium
+  program: using certutil.exe, executing bitsadmin.exe and running Powershell’s DownloadFile() method
+  parameters: urlcache
+  detection_sources:
+    - Network Traffic Analysis
+    - File Integrity Monitoring (FIM)
+  detection_rules:
+  
+
+behavior:
+  name: Disabling Windows Firewall Rules via Command Line
+  applicable mitre attack ttp: TA[TA0005].[T1562].[004]
+  severity: medium
+  program: NetSh Advfirewall set allprofiles state off
+  parameters: none
+  detection_sources:
+    - Network Traffic Analysis
+    - Endpoint Security Solutions
+    - Windows Event Logs
+  detection_rules:
+   - https://github.com/mdecrevoisier/SIGMA-detection-rules/blob/007769ff4011fbb7c28d8db7431db3e89b614711/windows-firewall/win-os-firewall%20deactivation%20(PowerShell).yaml#L21
+   
+
+
+behavior:
+  name: establishing proxy connection
+  applicable mitre_attck ttp: TA[TA0005].[T1218]
+  severity: medium
+  program: using AppLaunch.exe to execute the proxy tool (iox) and establish a proxy connection to a remote server
+  parameters: ip address
+  detection_sources:
+    - Network Traffic Analysis
+    - Command and Script Logging
+  detection_rules:
+
+
+behavior:
+  name: Malicious DLL side-loading of mscoree.dll
+  applicable mitre_attck ttp: TA[TA0011].[T1105]
+  severity: high
+  program: using proxy known as Rakshasa, and downloading using the certutil command and executing on the system 
+  parameters: ip address
+  detection_sources:
+    - Network Traffic Analysis
+    - Endpoint Security Solutions
+  detection_rules:
+
+    
+Binaries or tools whose IOCs are mentioned in the report:
+
+1. msvcp140.dll
+SHA-256 Hash: bc90ef8121d20af264cc15b38dd1c3a866bfe5a9eb66064feb2a00d860a0e716
+Description: This file was tampered with by the threat actor to serve as a custom Cobalt Strike memory evasion loader.
+
+2. MSASN1.dll
+SHA-256 Hash: 84b3bc58ec04ab272544d31f5e573c0dd7812b56df4fa445194e7466f280e16d
+
+3. cloud_init
+Description: A Golang ELF binary packed with UPX, compiled from the NPS repository, which is another intranet proxy server compatible with most common protocols. The threat actor altered the code to encrypt the strings during compilation.
+code: https://github.com/ehang-io/nps/tree/master
+
+4. AppLaunch.exe
+Description: A binary that manages and executes applications built with Microsoft's .NET Framework, used by the threat actor for generating shellcode injection alerts.
+
+5. ra.exe
+Description: A proxy tool known as Rakshasa, downloaded from its official GitHub page using the certutil command. This tool is used by the threat actor to establish proxy tunnels to their infrastructure.
+code: https://github.com/Mob2003/rakshasa
+
+6. ds_monitor.exe
+Description: A legitimately signed version of Trend Micro’s Deep Security Monitor, used by the threat actor to load Cobalt Strike by side-loading a malicious DLL.
+
+7. shellcode - a Golang binary known as iox
+code: https://github.com/EddieIvan01/iox
+
+8. mscoree.dll
+
+9. MEGA Cmd, a command-line utility that works with the Mega file hosting service
+code: https://mega.io/cmd
+
+10. Supershell panel, chinese C2 based platform 
+code: https://github.com/tdragon6/Supershell/tree/main
